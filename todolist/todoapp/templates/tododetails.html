@@ -1,0 +1,37 @@
+{% extends "base.html"%}
+
+{% block content %}
+
+<div class="container">
+        <h2 align="center">List-INFORMATION</h2>
+    {% if 'todoapp.add_todoinfo' in user_permissions %}
+    <button  ><a style=" background-color:black,color:white" href="{% url 'todoapp:create_list' %}" class="btn btn-default active;btn btn-info btn-sm">+ AddCard</a></button>
+    {% endif %}
+        <center>
+    <table class="table table-hover">
+        <tr>
+            <th>Title</th>
+            <th>Info</th>
+            <th>Date</th>
+            <th>Status</th>
+            {% if 'todoapp.change_todo_info' in user_permissions and 'todoapp.delete_todo_info' in user_permissions %}
+            <th>operations</th>
+            {% endif %}
+        </tr>
+        {% for obj in object %}
+        <tr>
+            <td>{{obj.task_title}}</td>
+            <td>{{obj.task_info}}</td>
+            <td>{{obj.actual_date}}</td>
+            <td>{{obj.status}}</td>
+             {% if 'todoapp.change_todo_info' in user_permissions and 'todoapp.delete_todo_info' in user_permissions %}
+            <td ><a href="{% url 'todoapp:edit_list' obj.id %}" class="btn btn-default active;btn btn-info btn-sm">edit</a>    <a
+                    href="{% url 'todoapp:delete_list' obj.id %}" class="btn btn-default active;btn btn-info btn-sm">delete</a>
+                </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </table>
+</center>
+</div>
+{% endblock %}
